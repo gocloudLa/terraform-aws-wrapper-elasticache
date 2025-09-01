@@ -1,0 +1,9 @@
+title: "Complete Example"
+description: "This example demonstrates a comprehensive setup of AWS ElastiCache clusters using Terraform, showcasing various configurations such as simple, clustered, legacy, user management, and log delivery."
+main_purpose: "The main purpose is to configure multiple ElastiCache clusters with different settings and features."
+key_features:
+  - "**Exsimple**: A simple ElastiCache setup with basic configurations."
+  - "**Excluster**: A clustered ElastiCache setup with multi-node groups and automatic failover."
+  - "**Exlegacy**: An ElastiCache setup compatible with legacy versions, ensuring backward compatibility."
+  - "**Exusers**: An ElastiCache setup with user management, including default and custom users with specific access permissions."
+  - "**Exlogs**: An ElastiCache setup with log delivery configurations for engine and slow logs to CloudWatch."
