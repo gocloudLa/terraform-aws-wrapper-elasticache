@@ -123,29 +123,6 @@ features:
             }
           }
           ```
-  - icon: 🆙️
-    title: Upgrade from v1.x to v2.0
-    short_description: 
-    long_description: ""
-    examples:
-  - icon: 🔀
-    title: Moved resources
-    short_description: Manages ElastiCache resources with updated resource names
-    long_description: |
-      1. moved resources:
-      - `aws_elasticache_parameter_group.default[0]` => `aws_elasticache_parameter_group.this[0]`
-      - `aws_elasticache_replication_group.default[0]` => `aws_elasticache_replication_group.this[0]`
-      - `aws_elasticache_subnet_group.default[0]` => `aws_elasticache_subnet_group.this[0]`
-    examples:
-  - icon: 🔄
-    title: Changed default variable values
-    short_description: Configures Redis cluster with version 7.x and cluster mode
-    long_description: |
-      1. Variables new values:
-      - `engine_version` new value `"7.x"`
-      - `parameter_group_family` new value `"redis.x"`
-      - `cluster_mode_enabled` new value `true`
-    examples:
 important_notes: ""
 input_table: |
   | `elasticache_parameters` | Map containing parameters for the configuration of ElastiCache clusters. | `map` | `{}` | no |
