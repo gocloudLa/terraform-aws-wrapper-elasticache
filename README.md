@@ -21,8 +21,8 @@ The Terraform Wrapper for ElastiCache simplifies the creation of Amazon's Elasti
 ### 🔗 External Modules
 | Name | Version |
 |------|------:|
-| [terraform-aws-modules/elasticache/aws](https://github.com/terraform-aws-modules/elasticache-aws) | 1.7.0 |
-| [terraform-aws-modules/security-group/aws](https://github.com/terraform-aws-modules/security-group-aws) | 5.3.0 |
+| <a href="https://github.com/terraform-aws-modules/terraform-aws-elasticache" target="_blank">terraform-aws-modules/elasticache/aws</a> | 1.7.0 |
+| <a href="https://github.com/terraform-aws-modules/terraform-aws-security-group" target="_blank">terraform-aws-modules/security-group/aws</a> | 5.3.0 |
 
 
 
