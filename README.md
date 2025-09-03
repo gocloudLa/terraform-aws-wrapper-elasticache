@@ -84,7 +84,7 @@ log_delivery_configuration = {
     # cloudwatch_log_group_retention_in_days = 30 # Default: 14
   }
   slow-log = {
-    # Entra en conflicto si no se define y se habilitan ambos log-groups
+    # Conflicts if not defined and both log-groups are enabled
     # https://github.com/terraform-aws-modules/terraform-aws-elasticache/issues/16
     cloudwatch_log_group_name = "dmc-prd-example-00-slow" # Default: {common_name}-{each.key} / dmc-prd-example-00
     destination_type          = "cloudwatch-logs"
@@ -107,20 +107,20 @@ Manage the creation of users and their ACLs
 user_group = {
   # create_default_user = true
   default_user = {
-    # MODO DE CONEXION: redis-cli -h ${HOST} -p 6379 --tls --pass password_default_user_1234567890
-    # IMPORTANTE!! Los users son va nivel cuenta, por lo tanto los nombres tiene que ser UNICOS!!
+    # CONNECTION MODE: redis-cli -h ${HOST} -p 6379 --tls --pass password_default_user_1234567890
+    # IMPORTANT!! Users are at account level, therefore names must be UNIQUE!!
     user_id   = "dmc-prd-example-exusers-default"
     passwords = ["password_default_user_1234567890"]
     # access_string = "" # Default: "on ~* +@all" (administrator)
   }
   users = {
     "dmc-prd-example-exusers-administrator" = {
-      # MODO DE CONEXION: redis-cli -h ${HOST} -p 6379 --tls --user dmc-prd-example-useexusersrs-administrator --pass password_administrator_1234567890
+      # CONNECTION MODE: redis-cli -h ${HOST} -p 6379 --tls --user dmc-prd-example-useexusersrs-administrator --pass password_administrator_1234567890
       passwords     = ["password_administrator_1234567890"]
       access_string = "on ~* +@all"
     }
     "dmc-prd-example-exusers-readonly" = {
-      # MODO DE CONEXION: redis-cli -h ${HOST} -p 6379 --tls --user dmc-prd-example-exusers-readonly --pass password_readonly_1234567890
+      # CONNECTION MODE: redis-cli -h ${HOST} -p 6379 --tls --user dmc-prd-example-exusers-readonly --pass password_readonly_1234567890
       passwords     = ["password_readonly_1234567890"]
       access_string = "on ~* -@all +@read"
     }
