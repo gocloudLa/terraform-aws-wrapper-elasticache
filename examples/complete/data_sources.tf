@@ -1,7 +1,7 @@
 data "aws_vpc" "this" {
   filter {
     name   = "tag:Name"
-    values = ["${local.common_name}"]
+    values = ["${local.common_name_prefix}"]
   }
 }
 data "aws_subnets" "database" {
@@ -11,6 +11,6 @@ data "aws_subnets" "database" {
   }
 
   tags = {
-    Name = "${local.common_name}-db*"
+    Name = "${local.common_name_prefix}-db*"
   }
 }
