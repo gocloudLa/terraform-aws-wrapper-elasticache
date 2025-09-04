@@ -2,7 +2,6 @@ module "wrapper_elasticache" {
   source = "../../"
 
   metadata = local.metadata
-  project  = "example"
 
   elasticache_parameters = {
     "ExSimple" = {
