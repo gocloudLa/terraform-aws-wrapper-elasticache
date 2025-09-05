@@ -177,6 +177,7 @@ dns_records = {
 | `cluster_mode_replicas_per_node_group` | Number of replicas per node group in cluster mode.                                                                                  | `number` | `null`                                                            | no       |
 | `global_replication_group_id_suffix`   | Suffix for the global replication group ID of ElastiCache.                                                                          | `string` | `null`                                                            | no       |
 | `tags`                                 | Map of common tags to apply to ElastiCache resources, derived from `local.common_tags`.                                             | `map`    | `-`                                                               | no       |
+| tags                                   | A map of tags to assign to resources.                                                                                               | `map`    | `{}`                                                              | no       |
 
 
 
