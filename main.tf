@@ -68,7 +68,7 @@ module "elasticache" {
 
   user_group_ids = try(module.elasticache_user_group[each.key].group_id, null) != null ? [module.elasticache_user_group[each.key].group_id] : null
 
-  tags = local.common_tags
+  tags = merge(local.common_tags, try(each.value.tags, var.elasticache_defaults.tags, null))
 }
 
 
