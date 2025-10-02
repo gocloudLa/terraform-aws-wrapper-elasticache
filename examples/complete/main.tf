@@ -19,6 +19,25 @@ module "wrapper_elasticache" {
       }
     }
 
+    "ExCluster" = {
+      subnets = data.aws_subnets.database.ids
+
+      # Clustered mode
+      cluster_mode_enabled       = true
+      cluster_mode               = "enabled"
+      num_node_groups            = 2
+      replicas_per_node_group    = 3
+      automatic_failover_enabled = true
+      multi_az_enabled           = true
+
+      dns_records = {
+        "" = {
+          zone_name    = local.zone_private
+          private_zone = true
+        }
+      }
+    }
+
     # Allows changing instance size (vertical scaling) with minimal
     # service disruption thanks to Multi-AZ + automatic failover.
     # Docs: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html
@@ -35,6 +54,27 @@ module "wrapper_elasticache" {
       engine_version         = "7.1"
       parameter_group_family = "redis7"
       node_type              = "cache.t4g.micro"
+
+      dns_records = {
+        "" = {
+          zone_name    = local.zone_private
+          private_zone = true
+        }
+      }
+    }
+
+    "ExLegacy" = {
+      subnets = data.aws_subnets.database.ids
+
+      # BACKGUARD Compatibility ( module version 1.0 )
+      engine_version             = "6.x"
+      parameter_group_family     = "redis6.x"
+      cluster_mode_enabled       = false
+      at_rest_encryption_enabled = false
+      transit_encryption_enabled = false
+      automatic_failover_enabled = false
+      transit_encryption_mode    = null
+      # BACKGUARD Compatibility ( module version 1.0 )
 
       dns_records = {
         "" = {
