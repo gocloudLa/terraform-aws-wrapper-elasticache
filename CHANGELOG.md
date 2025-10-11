@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.0.0...v1.1.0) (2025-10-11)
+
+
+### Features
+
+* **example:** add example redis multi-az + reader ([#3](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/3)) ([81b02c8](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/81b02c80e5ad25fabf95edb3a1d80c5bcdcea1ef))
+
+
+### Bug Fixes
+
+* **versions:** remove unused random ([#4](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/4)) ([90162b1](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/90162b1e80af077e95d91deb8c92522f49b12870))
+
 ## 1.0.0 (2025-09-05)
 
 
