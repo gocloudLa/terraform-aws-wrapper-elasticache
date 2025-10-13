@@ -1,7 +1,7 @@
 module "elasticache" {
   for_each = var.elasticache_parameters
   source   = "terraform-aws-modules/elasticache/aws"
-  version  = "1.7.0"
+  version  = "1.10.2"
 
   # cluster_id               = "${local.common_name}-${each.key}"
   # create                   = true
@@ -90,7 +90,7 @@ locals {
 module "elasticache_user_group" {
   for_each = local.user_group_calculated
   source   = "terraform-aws-modules/elasticache/aws//modules/user-group"
-  version  = "1.7.0"
+  version  = "1.10.2"
 
   user_group_id = lower("${local.common_name}-${each.key}")
   create        = try(each.value.create, true)
