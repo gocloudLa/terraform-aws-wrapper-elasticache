@@ -162,6 +162,22 @@ locals {
     local.alarms_custom_tmp
   )
 
+  alarms_for_node = flatten([
+    for elasticache_name, elasticache_module in module.elasticache : [
+      for node in elasticache_module.cluster_cache_nodes : [
+        for alarm_name, alarm in local.alarms : {
+          cluster_name = elasticache_name
+          cluster_id   = elasticache_module.cluster_id
+          node_id      = node.cache_node_id
+          alarm_name   = alarm_name
+          alarm        = alarm
+        }
+      ]
+    ]
+  ])
+
+
+
 
 }
 
