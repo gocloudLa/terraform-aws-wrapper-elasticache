@@ -221,7 +221,7 @@ module "wrapper_elasticache" {
           }
         }
         "critical-SwapUsage" = {
-          description = "SwapUsage below 250 MB"
+          description = "SwapUsage below 200 MB"
           # This alarm helps to monitor the amount of swap used on the host.
           threshold           = 200000000
           unit                = "Bytes"
