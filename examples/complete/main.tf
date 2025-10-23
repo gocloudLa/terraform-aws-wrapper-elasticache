@@ -179,7 +179,6 @@ module "wrapper_elasticache" {
           unit                = "Bytes"
           metric_name         = "FreeableMemory"
           statistic           = "Average"
-          namespace           = "AWS/ElastiCache"
           period              = 60
           evaluation_periods  = 15
           datapoints_to_alarm = 15
@@ -195,7 +194,6 @@ module "wrapper_elasticache" {
           unit                = "Bytes"
           metric_name         = "FreeableMemory"
           statistic           = "Average"
-          namespace           = "AWS/ElastiCache"
           period              = 60
           evaluation_periods  = 15
           datapoints_to_alarm = 15
@@ -211,7 +209,6 @@ module "wrapper_elasticache" {
           unit                = "Bytes"
           metric_name         = "SwapUsage"
           statistic           = "Average"
-          namespace           = "AWS/ElastiCache"
           period              = 60
           evaluation_periods  = 15
           datapoints_to_alarm = 15
@@ -227,7 +224,6 @@ module "wrapper_elasticache" {
           unit                = "Bytes"
           metric_name         = "SwapUsage"
           statistic           = "Average"
-          namespace           = "AWS/ElastiCache"
           period              = 60
           evaluation_periods  = 15
           datapoints_to_alarm = 15
@@ -243,7 +239,6 @@ module "wrapper_elasticache" {
           unit                = "Count"
           metric_name         = "CurrConnections"
           statistic           = "Average"
-          namespace           = "AWS/ElastiCache"
           period              = 60
           evaluation_periods  = 3
           datapoints_to_alarm = 3
@@ -259,7 +254,6 @@ module "wrapper_elasticache" {
           unit                = "Count"
           metric_name         = "CurrConnections"
           statistic           = "Average"
-          namespace           = "AWS/ElastiCache"
           period              = 60
           evaluation_periods  = 3
           datapoints_to_alarm = 3
