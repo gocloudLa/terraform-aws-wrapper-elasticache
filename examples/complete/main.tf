@@ -154,9 +154,9 @@ module "wrapper_elasticache" {
         }
       }
       enable_alarms = true # Default: false
-      alarms_disabled = [ # if you need to disable an alarm
-        "critical-CPUUtilization", 
-        "critical-DatabaseMemoryUsagePercentage", 
+      alarms_disabled = [  # if you need to disable an alarm
+        "critical-CPUUtilization",
+        "critical-DatabaseMemoryUsagePercentage",
         "critical-EngineCPUUtilization"
       ]
 
@@ -235,7 +235,7 @@ module "wrapper_elasticache" {
           alarms_tags = {
             "alarm-level" = "CRIT"
           }
-        }        
+        }
         "warning-CurrConnections" = {
           # This alarm is used to detect the number of client connections, excluding connections from read replicas.
           description         = "Triggers if the number of client connections is above the threshold of 30 connections"
