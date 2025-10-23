@@ -144,5 +144,132 @@ module "wrapper_elasticache" {
       }
     }
 
+    "ExAlarms" = {
+      subnets = data.aws_subnets.database.ids
+
+      dns_records = {
+        "" = {
+          zone_name    = local.zone_private
+          private_zone = true
+        }
+      }
+      enable_alarms = true # Default: false
+      alarms_disabled = [ # if you need to disable an alarm
+        "critical-CPUUtilization", 
+        "critical-DatabaseMemoryUsagePercentage", 
+        "critical-EngineCPUUtilization"
+      ]
+
+      # alarms_overrides = {
+      #   "warning-CPUUtilization" = {
+      #     "actions_enabled"     = true
+      #     "evaluation_periods"  = 2
+      #     "datapoints_to_alarm" = 2
+      #     "threshold"           = 30
+      #     "period"              = 180
+      #     "treat_missing_data"  = "ignore"
+      #   }
+      # }
+
+      alarms_custom = {
+        "warning-FreeableMemory" = {
+          # This alarm helps to monitor low freeable memory which can mean that there is a spike in database connections or that your instance may be under high memory pressure.
+          description         = "FreeableMemory below 350 MB"
+          threshold           = 367001600
+          unit                = "Bytes"
+          metric_name         = "FreeableMemory"
+          statistic           = "Average"
+          namespace           = "AWS/ElastiCache"
+          period              = 60
+          evaluation_periods  = 15
+          datapoints_to_alarm = 15
+          comparison_operator = "LessThanThreshold"
+          alarms_tags = {
+            "alarm-level" = "WARN"
+          }
+        }
+        "critical-FreeableMemory" = {
+          description = "FreeableMemory below 250 MB"
+          # This alarm helps to monitor low freeable memory which can mean that there is a spike in database connections or that your instance may be under high memory pressure.
+          threshold           = 262144000
+          unit                = "Bytes"
+          metric_name         = "FreeableMemory"
+          statistic           = "Average"
+          namespace           = "AWS/ElastiCache"
+          period              = 60
+          evaluation_periods  = 15
+          datapoints_to_alarm = 15
+          comparison_operator = "LessThanThreshold"
+          alarms_tags = {
+            "alarm-level" = "CRIT"
+          }
+        }
+        "warning-SwapUsage" = {
+          # This alarm helps to monitor the amount of swap used on the host.
+          description         = "SwapUsage below 300 MB"
+          threshold           = 300000000
+          unit                = "Bytes"
+          metric_name         = "SwapUsage"
+          statistic           = "Average"
+          namespace           = "AWS/ElastiCache"
+          period              = 60
+          evaluation_periods  = 15
+          datapoints_to_alarm = 15
+          comparison_operator = "GreaterThanThreshold"
+          alarms_tags = {
+            "alarm-level" = "WARN"
+          }
+        }
+        "critical-SwapUsage" = {
+          description = "SwapUsage below 250 MB"
+          # This alarm helps to monitor the amount of swap used on the host.
+          threshold           = 200000000
+          unit                = "Bytes"
+          metric_name         = "SwapUsage"
+          statistic           = "Average"
+          namespace           = "AWS/ElastiCache"
+          period              = 60
+          evaluation_periods  = 15
+          datapoints_to_alarm = 15
+          comparison_operator = "GreaterThanThreshold"
+          alarms_tags = {
+            "alarm-level" = "CRIT"
+          }
+        }        
+        "warning-CurrConnections" = {
+          # This alarm is used to detect the number of client connections, excluding connections from read replicas.
+          description         = "Triggers if the number of client connections is above the threshold of 30 connections"
+          threshold           = 30
+          unit                = "Count"
+          metric_name         = "CurrConnections"
+          statistic           = "Average"
+          namespace           = "AWS/ElastiCache"
+          period              = 60
+          evaluation_periods  = 3
+          datapoints_to_alarm = 3
+          comparison_operator = "GreaterThanThreshold"
+          alarms_tags = {
+            "alarm-level" = "WARN"
+          }
+        }
+        "critical-CurrConnections" = {
+          # This alarm is used to detect the number of client connections, excluding connections from read replicas.
+          description         = "Triggers if the number of client connections is above the threshold of 20 connections"
+          threshold           = 20
+          unit                = "Count"
+          metric_name         = "CurrConnections"
+          statistic           = "Average"
+          namespace           = "AWS/ElastiCache"
+          period              = 60
+          evaluation_periods  = 3
+          datapoints_to_alarm = 3
+          comparison_operator = "GreaterThanThreshold"
+          alarms_tags = {
+            "alarm-level" = "CRIT"
+          }
+        }
+      }
+    }
+
   }
 }
