@@ -104,8 +104,8 @@ locals {
       merge(
         value,
         {
-          alarm_name          = "${split("/", value.namespace)[1]}-${alarm}-${local.common_name}-${elasticache_name}"
-          alarm_description   = "Elasticache[${elasticache_name}] ${value.description}"
+          alarm_name = alarm
+          #alarm_description   = "Elasticache[${elasticache_name}] ${value.description}"
           actions_enabled     = try(values.alarms_overrides[alarm].actions_enabled, true)
           threshold           = try(values.alarms_overrides[alarm].threshold, value.threshold)
           unit                = try(values.alarms_overrides[alarm].unit, value.unit)
@@ -117,12 +117,10 @@ locals {
           comparison_operator = try(values.alarms_overrides[alarm].comparison_operator, value.comparison_operator)
           period              = try(values.alarms_overrides[alarm].period, value.period, 60)
           treat_missing_data  = try(values.alarms_overrides[alarm].treat_missing_data, "notBreaching")
-          dimensions = try(value.dimensions, {
-            CacheClusterId = lower("${local.common_name}-${elasticache_name}")
-          })
-          ok_actions    = try(values.alarms_overrides[alarm].ok_actions, value.ok_actions, [])
-          alarm_actions = try(values.alarms_overrides[alarm].alarm_actions, value.alarm_actions, [])
-          alarms_tags   = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-elasticache-name" = "${local.common_name}-${elasticache_name}" })
+          namespace           = try(values.alarms_overrides[alarm].namespace, value.namespace)
+          ok_actions          = try(values.alarms_overrides[alarm].ok_actions, value.ok_actions, [])
+          alarm_actions       = try(values.alarms_overrides[alarm].alarm_actions, value.alarm_actions, [])
+          alarms_tags         = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-elasticache-name" = "${local.common_name}-${elasticache_name}" })
       }) if can(var.elasticache_parameters) && var.elasticache_parameters != {} && try(values.enable_alarms, false) && !contains(try(values.alarms_disabled, []), alarm)
     }
   ]...)
@@ -133,8 +131,8 @@ locals {
       "${elasticache_name}-${alarm}" => merge(
         value,
         {
-          alarm_name          = "${split("/", value.namespace)[1]}-${alarm}-${local.common_name}-${elasticache_name}"
-          alarm_description   = "Elasticache[${elasticache_name}] ${value.description}"
+          alarm_name = alarm
+          #alarm_description   = "Elasticache[${elasticache_name}] ${value.description}"
           actions_enabled     = try(value.actions_enabled, true)
           threshold           = value.threshold
           unit                = value.unit
@@ -146,12 +144,10 @@ locals {
           comparison_operator = value.comparison_operator
           period              = value.period
           treat_missing_data  = try("${value.treat_missing_data}", "notBreaching")
-          dimensions = try(value.dimensions, {
-            CacheClusterId = lower("${local.common_name}-${elasticache_name}")
-          })
-          ok_actions    = try(value.ok_actions, [])
-          alarm_actions = try(value.alarm_actions, [])
-          alarms_tags   = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-elasticache-name" = "${local.common_name}-${elasticache_name}" })
+          namespace           = try(value.namespace, "AWS/ElastiCache")
+          ok_actions          = try(value.ok_actions, [])
+          alarm_actions       = try(value.alarm_actions, [])
+          alarms_tags         = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-elasticache-name" = "${local.common_name}-${elasticache_name}" })
         }
       ) if can(var.elasticache_parameters) && var.elasticache_parameters != {} && try(values.enable_alarms, false)
     }
@@ -162,19 +158,30 @@ locals {
     local.alarms_custom_tmp
   )
 
-  alarms_for_node = flatten([
-    for elasticache_name, elasticache_module in module.elasticache : [
-      for node in elasticache_module.cluster_cache_nodes : [
-        for alarm_name, alarm in local.alarms : {
-          cluster_name = elasticache_name
-          cluster_id   = elasticache_module.cluster_id
-          node_id      = node.cache_node_id
-          alarm_name   = alarm_name
-          alarm        = alarm
-        }
+  # Node-level alarms - creates a flat map for for_each
+  alarms_for_node = merge(flatten([
+    for elasticache_name, elasticache_config in var.elasticache_parameters : [
+      # Iterate through each node group (num_node_groups) and for each node group iterate through its replicas (replicas_per_node_group)
+      # This creates alarms for each individual node in the cluster
+      for node_group_idx in range(try(elasticache_config.num_node_groups, 1)) : [
+        for replica_idx in range(try(elasticache_config.replicas_per_node_group, 0) + 1) : [
+          for alarm_name, alarm in local.alarms : {
+            "${elasticache_name}-${node_group_idx}-${replica_idx}-${alarm_name}" = merge(
+              alarm,
+              {
+                alarm_name        = "${split("/", alarm.namespace)[1]}-${alarm.alarm_name}-${tolist(module.elasticache[elasticache_name].replication_group_member_clusters)[replica_idx]}"
+                alarm_description = "Elasticache[${tolist(module.elasticache[elasticache_name].replication_group_member_clusters)[replica_idx]}] ${alarm.description}"
+                dimensions = {
+                  CacheClusterId = tolist(module.elasticache[elasticache_name].replication_group_member_clusters)[replica_idx]
+                  CacheNodeId    = "0001"
+                }
+              }
+            )
+          }
+        ]
       ]
     ]
-  ])
+  ])...)
 
 
 
@@ -198,11 +205,10 @@ data "aws_sns_topic" "alarms_sns_topic_name" {
 }
 
 /*----------------------------------------------------------------------*/
-/* CW Alarms Variables                                                  */
+/* CW Node-Level Alarms                                                 */
 /*----------------------------------------------------------------------*/
-
-resource "aws_cloudwatch_metric_alarm" "alarms" {
-  for_each = nonsensitive(local.alarms)
+resource "aws_cloudwatch_metric_alarm" "node_alarms" {
+  for_each = nonsensitive(local.alarms_for_node)
 
   alarm_name          = each.value.alarm_name
   alarm_description   = each.value.alarm_description

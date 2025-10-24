@@ -4,7 +4,7 @@ module "wrapper_elasticache" {
   metadata = local.metadata
 
   elasticache_parameters = {
-    "ExSimple" = {
+    /*"ExSimple" = {
       subnets = data.aws_subnets.database.ids
 
       # engine_version         = "7.1"
@@ -142,9 +142,41 @@ module "wrapper_elasticache" {
           log_format                = "json"
         }
       }
-    }
+    }*/
 
-    "ExAlarms" = {
+    /*"ExCluster" = {
+      subnets = data.aws_subnets.database.ids
+
+      # Clustered mode
+      cluster_mode_enabled       = true
+      cluster_mode               = "enabled"
+      num_node_groups            = 2
+      replicas_per_node_group    = 1
+      automatic_failover_enabled = true
+      multi_az_enabled           = true
+
+      dns_records = {
+        "" = {
+          zone_name    = local.zone_private
+          private_zone = true
+        }
+      }
+
+      enable_alarms = true # Default: false
+      alarms_disabled = [  # if you need to disable an alarm
+        "critical-CPUUtilization",
+        "critical-DatabaseMemoryUsagePercentage",
+        "critical-EngineCPUUtilization"
+      ]
+    }*/
+
+    /*"ExAlarms" = {
+
+      #TEST
+      cluster_mode_enabled    = false
+      num_node_groups         = 1 # si esto es mayor a uno --> modo cluster
+      replicas_per_node_group = 2
+
       subnets = data.aws_subnets.database.ids
 
       dns_records = {
@@ -269,6 +301,29 @@ module "wrapper_elasticache" {
           }
         }
       }
+    }*/
+
+    "ExTest" = {
+      subnets = data.aws_subnets.database.ids
+
+      # Clustered mode
+      cluster_mode_enabled    = false
+      num_node_groups         = 1 # si esto es mayor a uno --> modo cluster
+      replicas_per_node_group = 1
+
+      dns_records = {
+        "" = {
+          zone_name    = local.zone_private
+          private_zone = true
+        }
+      }
+
+      enable_alarms = true # Default: false
+      alarms_disabled = [  # if you need to disable an alarm
+        "critical-CPUUtilization",
+        "critical-DatabaseMemoryUsagePercentage",
+        "critical-EngineCPUUtilization"
+      ]
     }
 
   }
