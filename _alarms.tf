@@ -98,8 +98,8 @@ locals {
       merge(
         value,
         {
-          alarm_name = alarm
-          #alarm_description   = "Elasticache[${elasticache_name}] ${value.description}"
+          alarm_name          = alarm
+          alarm_description   = try(values.alarms_overrides[alarm].description, value.description)
           actions_enabled     = try(values.alarms_overrides[alarm].actions_enabled, true)
           threshold           = try(values.alarms_overrides[alarm].threshold, value.threshold)
           unit                = try(values.alarms_overrides[alarm].unit, value.unit)
@@ -128,8 +128,8 @@ locals {
       "${elasticache_name}-${alarm}" => merge(
         value,
         {
-          alarm_name = alarm
-          #alarm_description   = "Elasticache[${elasticache_name}] ${value.description}"
+          alarm_name          = alarm
+          alarm_description   = try(value.description, "")
           actions_enabled     = try(value.actions_enabled, true)
           threshold           = value.threshold
           unit                = value.unit
@@ -142,7 +142,6 @@ locals {
           comparison_operator = value.comparison_operator
           period              = value.period
           treat_missing_data  = try("${value.treat_missing_data}", "notBreaching")
-          namespace           = try(value.namespace, "AWS/ElastiCache")
           ok_actions          = try(value.ok_actions, [])
           alarm_actions       = try(value.alarm_actions, [])
           alarms_tags         = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-elasticache-name" = "${local.common_name}-${elasticache_name}" })
@@ -171,7 +170,7 @@ locals {
                 alarm_description = "Elasticache[${tolist(module.elasticache[elasticache_name].replication_group_member_clusters)[replica_idx]}] ${alarm.description}"
                 dimensions = {
                   CacheClusterId = tolist(module.elasticache[elasticache_name].replication_group_member_clusters)[replica_idx]
-                  CacheNodeId    = "0001"
+                  CacheNodeId    = "0001" # This value is the default value for the CacheNodeId dimension.
                 }
               }
             )
