@@ -13,7 +13,6 @@ locals {
       unit                = "Percent"
       metric_name         = "CPUUtilization"
       statistic           = "Average"
-      namespace           = "AWS/ElastiCache"
       comparison_operator = "GreaterThanThreshold"
       evaluation_periods  = 5
       datapoints_to_alarm = 5
@@ -28,7 +27,6 @@ locals {
       unit                = "Percent"
       metric_name         = "CPUUtilization"
       statistic           = "Average"
-      namespace           = "AWS/ElastiCache"
       comparison_operator = "GreaterThanThreshold"
       evaluation_periods  = 5
       datapoints_to_alarm = 5
@@ -43,7 +41,6 @@ locals {
       unit                = "Percent"
       metric_name         = "DatabaseMemoryUsagePercentage"
       statistic           = "Average"
-      namespace           = "AWS/ElastiCache"
       comparison_operator = "GreaterThanThreshold"
       evaluation_periods  = 3
       datapoints_to_alarm = 3
@@ -58,7 +55,6 @@ locals {
       unit                = "Percent"
       metric_name         = "DatabaseMemoryUsagePercentage"
       statistic           = "Average"
-      namespace           = "AWS/ElastiCache"
       comparison_operator = "GreaterThanThreshold"
       evaluation_periods  = 3
       datapoints_to_alarm = 3
@@ -73,7 +69,6 @@ locals {
       unit                = "Percent"
       metric_name         = "EngineCPUUtilization"
       statistic           = "Average"
-      namespace           = "AWS/ElastiCache"
       comparison_operator = "GreaterThanThreshold"
       evaluation_periods  = 3
       datapoints_to_alarm = 3
@@ -88,7 +83,6 @@ locals {
       unit                = "Percent"
       metric_name         = "EngineCPUUtilization"
       statistic           = "Average"
-      namespace           = "AWS/ElastiCache"
       comparison_operator = "GreaterThanThreshold"
       evaluation_periods  = 3
       datapoints_to_alarm = 3
@@ -110,6 +104,7 @@ locals {
           threshold           = try(values.alarms_overrides[alarm].threshold, value.threshold)
           unit                = try(values.alarms_overrides[alarm].unit, value.unit)
           metric_name         = try(values.alarms_overrides[alarm].metric_name, value.metric_name)
+          namespace           = try(values.alarms_overrides[alarm].namespace, value.namespace, "AWS/ElastiCache")
           evaluation_periods  = try(values.alarms_overrides[alarm].evaluation_periods, value.evaluation_periods, null)
           datapoints_to_alarm = try(values.alarms_overrides[alarm].datapoints_to_alarm, value.datapoints_to_alarm, null)
           statistic           = try(values.alarms_overrides[alarm].statistic, value.statistic, null)
@@ -117,10 +112,12 @@ locals {
           comparison_operator = try(values.alarms_overrides[alarm].comparison_operator, value.comparison_operator)
           period              = try(values.alarms_overrides[alarm].period, value.period, 60)
           treat_missing_data  = try(values.alarms_overrides[alarm].treat_missing_data, "notBreaching")
-          namespace           = try(values.alarms_overrides[alarm].namespace, value.namespace)
-          ok_actions          = try(values.alarms_overrides[alarm].ok_actions, value.ok_actions, [])
-          alarm_actions       = try(values.alarms_overrides[alarm].alarm_actions, value.alarm_actions, [])
-          alarms_tags         = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-elasticache-name" = "${local.common_name}-${elasticache_name}" })
+          dimensions = try(value.dimensions, {
+            CacheClusterId = lower("${local.common_name}-${elasticache_name}")
+          })
+          ok_actions    = try(values.alarms_overrides[alarm].ok_actions, value.ok_actions, [])
+          alarm_actions = try(values.alarms_overrides[alarm].alarm_actions, value.alarm_actions, [])
+          alarms_tags   = merge(try(values.alarms_overrides[alarm].alarms_tags, value.alarms_tags), { "alarm-elasticache-name" = "${local.common_name}-${elasticache_name}" })
       }) if can(var.elasticache_parameters) && var.elasticache_parameters != {} && try(values.enable_alarms, false) && !contains(try(values.alarms_disabled, []), alarm)
     }
   ]...)
@@ -137,6 +134,7 @@ locals {
           threshold           = value.threshold
           unit                = value.unit
           metric_name         = value.metric_name
+          namespace           = try(value.namespace, "AWS/ElastiCache")
           evaluation_periods  = try(value.evaluation_periods, null)
           datapoints_to_alarm = try(value.datapoints_to_alarm, null)
           statistic           = try(value.statistic, null)
