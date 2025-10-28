@@ -4,7 +4,7 @@ module "wrapper_elasticache" {
   metadata = local.metadata
 
   elasticache_parameters = {
-    /*"ExSimple" = {
+    "ExSimple" = {
       subnets = data.aws_subnets.database.ids
 
       # engine_version         = "7.1"
@@ -142,9 +142,9 @@ module "wrapper_elasticache" {
           log_format                = "json"
         }
       }
-    }*/
+    }
 
-    /*"ExCluster" = {
+    "ExCluster" = {
       subnets = data.aws_subnets.database.ids
 
       # Clustered mode
@@ -161,18 +161,10 @@ module "wrapper_elasticache" {
           private_zone = true
         }
       }
+    }
 
-      enable_alarms = true # Default: false
-      alarms_disabled = [  # if you need to disable an alarm
-        "critical-CPUUtilization",
-        "critical-DatabaseMemoryUsagePercentage",
-        "critical-EngineCPUUtilization"
-      ]
-    }*/
+    "ExAlarms" = {
 
-    /*"ExAlarms" = {
-
-      #TEST
       cluster_mode_enabled    = false
       num_node_groups         = 1 # si esto es mayor a uno --> modo cluster
       replicas_per_node_group = 2
@@ -192,16 +184,16 @@ module "wrapper_elasticache" {
         "critical-EngineCPUUtilization"
       ]
 
-      # alarms_overrides = {
-      #   "warning-CPUUtilization" = {
-      #     "actions_enabled"     = true
-      #     "evaluation_periods"  = 2
-      #     "datapoints_to_alarm" = 2
-      #     "threshold"           = 30
-      #     "period"              = 180
-      #     "treat_missing_data"  = "ignore"
-      #   }
-      # }
+      alarms_overrides = {
+        "warning-CPUUtilization" = {
+          "actions_enabled"     = true
+          "evaluation_periods"  = 2
+          "datapoints_to_alarm" = 2
+          "threshold"           = 30
+          "period"              = 180
+          "treat_missing_data"  = "ignore"
+        }
+      }
 
       alarms_custom = {
         "warning-FreeableMemory" = {
@@ -295,29 +287,6 @@ module "wrapper_elasticache" {
           }
         }
       }
-    }*/
-
-    "ExTest" = {
-      subnets = data.aws_subnets.database.ids
-
-      # Clustered mode
-      cluster_mode_enabled    = false
-      num_node_groups         = 1 # si esto es mayor a uno --> modo cluster
-      replicas_per_node_group = 1
-
-      dns_records = {
-        "" = {
-          zone_name    = local.zone_private
-          private_zone = true
-        }
-      }
-
-      enable_alarms = true # Default: false
-      alarms_disabled = [  # if you need to disable an alarm
-        "critical-CPUUtilization",
-        "critical-DatabaseMemoryUsagePercentage",
-        "critical-EngineCPUUtilization"
-      ]
     }
 
   }
