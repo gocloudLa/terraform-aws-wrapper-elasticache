@@ -123,6 +123,84 @@ features:
             }
           }
           ```
+  - icon: 🚨
+    title: Alarms Configuration
+    short_description: Enables and customizes CloudWatch alarms for the elasticache.
+    long_description: |
+      This configuration block allows enabling, customizing, or disabling CloudWatch alarms. By default, alarms are not created 
+
+      You can:
+        - Enable alarms globally for the resource (`enable_alarms = true`).
+        - Override default alarm parameters using `alarms_overrides`.
+        - Disable specific default alarms using `alarms_disabled`.
+        - Add completely custom alarms using `alarms_custom`.
+
+    examples:
+      - title: Enable default alarms
+        code: |
+          ```hcl
+          enable_alarms = true
+          ```
+
+      - title: Override default alarm parameters
+        code: |
+          ```hcl
+          alarms_overrides = {
+            "warning-CPUUtilization" = {
+              "actions_enabled"     = true
+              "evaluation_periods"  = 2
+              "datapoints_to_alarm" = 2
+              "threshold"           = 30
+              "period"              = 180
+              "treat_missing_data"  = "ignore"
+            }
+          }
+          ```
+
+      - title: Disable specific alarms
+        code: |
+          ```hcl
+          alarms_disabled = ["critical-CPUUtilization", "critical-EBSByteBalance", "critical-EBSIOBalance"]
+          ```
+
+      - title: Add custom alarms
+        code: |
+          ```hcl
+          alarms_custom = {
+            "warning-FreeableMemory" = {
+              # This alarm helps to monitor low freeable memory which can mean that there is a spike in database connections or that your instance may be under high memory pressure.
+              description         = "FreeableMemory below 350 MB"
+              threshold           = 367001600
+              unit                = "Bytes"
+              metric_name         = "FreeableMemory"
+              statistic           = "Average"
+              namespace           = "AWS/ElastiCache"
+              period              = 60
+              evaluation_periods  = 15
+              datapoints_to_alarm = 15
+              comparison_operator = "LessThanThreshold"
+              alarms_tags = {
+                "alarm-level" = "WARN"
+                }
+              }
+            "critical-FreeableMemory" = {
+              description = "FreeableMemory below 250 MB"
+              # This alarm helps to monitor low freeable memory which can mean that there is a spike in database connections or that your instance may be under high memory pressure.
+              threshold           = 262144000
+              unit                = "Bytes"
+              metric_name         = "FreeableMemory"
+              statistic           = "Average"
+              namespace           = "AWS/ElastiCache"
+              period              = 60
+              evaluation_periods  = 15
+              datapoints_to_alarm = 15
+              comparison_operator = "LessThanThreshold"
+              alarms_tags = {
+                "alarm-level" = "CRIT"
+                }
+              }
+          }
+          ```
 important_notes: ""
 input_table: |
   | elasticache_parameters | Map containing parameters for the configuration of ElastiCache clusters. | `map` | `{}` | no |
