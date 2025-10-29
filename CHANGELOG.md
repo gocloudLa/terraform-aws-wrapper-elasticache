@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.1.0...v1.2.0) (2025-10-29)
+
+
+### Features
+
+* **module:** add alarms for redis elasticache ([#7](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/7)) ([131ba33](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/131ba33f6551279681e7c4df3da817b0282fdc3a))
+
 ## [1.1.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.0.0...v1.1.0) (2025-10-11)
 
 
