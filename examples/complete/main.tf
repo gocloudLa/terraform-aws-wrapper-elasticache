@@ -144,29 +144,10 @@ module "wrapper_elasticache" {
       }
     }
 
-    "ExCluster" = {
-      subnets = data.aws_subnets.database.ids
-
-      # Clustered mode
-      cluster_mode_enabled       = true
-      cluster_mode               = "enabled"
-      num_node_groups            = 2
-      replicas_per_node_group    = 1
-      automatic_failover_enabled = true
-      multi_az_enabled           = true
-
-      dns_records = {
-        "" = {
-          zone_name    = local.zone_private
-          private_zone = true
-        }
-      }
-    }
-
     "ExAlarms" = {
 
       cluster_mode_enabled    = false
-      num_node_groups         = 1 # si esto es mayor a uno --> modo cluster
+      num_node_groups         = 1
       replicas_per_node_group = 2
 
       subnets = data.aws_subnets.database.ids

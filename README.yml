@@ -125,7 +125,7 @@ features:
           ```
   - icon: 🚨
     title: Alarms Configuration
-    short_description: Enables and customizes CloudWatch alarms for the memorydb.
+    short_description: Enables and customizes CloudWatch alarms for the elasticache.
     long_description: |
       This configuration block allows enabling, customizing, or disabling CloudWatch alarms. By default, alarms are not created 
 
