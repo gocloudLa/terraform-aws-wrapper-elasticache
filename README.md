@@ -16,7 +16,7 @@ The Terraform Wrapper for ElastiCache simplifies the creation of Amazon's Elasti
 
 - 🌐 [DNS Records](#dns-records) - Register a CNAME DNS record in a Route53 hosted zone that is present within the account.
 
-- 🚨 [Alarms Configuration](#alarms-configuration) - Enables and customizes CloudWatch alarms for the memorydb.
+- 🚨 [Alarms Configuration](#alarms-configuration) - Enables and customizes CloudWatch alarms for the elasticache.
 
 
 
