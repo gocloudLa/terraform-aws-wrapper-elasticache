@@ -3,6 +3,31 @@ module "wrapper_elasticache" {
 
   metadata = local.metadata
 
+  /*----------------------------------------------------------------------*/
+  /* Elasticache Defaults                                                 */
+  /*----------------------------------------------------------------------*/
+
+  # memorydb_defaults = {
+  #
+  #   # Enable alarms for all services
+  #   enable_alarms = true # Default: false
+  #
+  #   # Note: If a value is specified at the service level, that value will be used and the default will not be applied.
+  #   alarms_defaults = {
+  #     # Default OK and Alarm actions ARNs for alarm notifications
+  #     #alarm_actions = ["arn:aws:sns:us-east-1:123456789012:example-alerts"]
+  #     #ok_actions    = ["arn:aws:sns:us-east-1:123456789012:example-alerts"]
+  #
+  #     # Disable specific CloudWatch alarms by default for all services.
+  #     #alarms_disabled = ["critical-CPUUtilization", "critical-MemoryUtilization"]
+  #    }
+  #
+  # }
+
+  /*----------------------------------------------------------------------*/
+  /* Elasticache Parameters                                               */
+  /*----------------------------------------------------------------------*/
+
   elasticache_parameters = {
     "ExSimple" = {
       subnets = data.aws_subnets.database.ids
