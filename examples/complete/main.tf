@@ -7,7 +7,7 @@ module "wrapper_elasticache" {
   /* Elasticache Defaults                                                 */
   /*----------------------------------------------------------------------*/
 
-  # memorydb_defaults = {
+  # elasticache_defaults = {
   #
   #   # Enable alarms for all services
   #   enable_alarms = true # Default: false
