@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.2.0...v1.2.1) (2025-11-06)
+
+
+### Bug Fixes
+
+* **alarms:** alarms_per_node loop ([#11](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/11)) ([3f486f7](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/3f486f7c325c5af4aee4521bf9378f157955ea65))
+* **deps:** bump the all-terraform-dependencies group across 1 directory with 2 updates ([#8](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/8)) ([258a02c](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/258a02cfc67ef6eef154767c07733823606a6a6e))
+
 ## [1.2.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.1.0...v1.2.0) (2025-10-29)
 
 
