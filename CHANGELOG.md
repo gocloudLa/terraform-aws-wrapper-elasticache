@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.2.1...v1.3.0) (2025-11-06)
+
+
+### Features
+
+* **alarms:** add default variable for alarms ([#12](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/12)) ([0329531](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/0329531c34698bcc39bc06a9663c2936c2ff32e8))
+
 ## [1.2.1](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.2.0...v1.2.1) (2025-11-06)
 
 
