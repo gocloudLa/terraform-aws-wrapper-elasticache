@@ -162,6 +162,7 @@ locals {
       # This creates alarms for each individual node in the cluster
       for node_group_idx in range(try(elasticache_config.num_node_groups, 1)) : [
         for replica_idx in range(try(elasticache_config.replicas_per_node_group, 0) + 1) : [
+          # Filter only alarms belonging to the current elasticache_name to avoid cross-product duplication
           for alarm_name, alarm in local.alarms : {
             "${elasticache_name}-${node_group_idx}-${replica_idx}-${alarm_name}" = merge(
               alarm,
@@ -174,10 +175,10 @@ locals {
                 }
               }
             )
-          }
+          } if startswith(alarm_name, "${elasticache_name}-")
         ]
       ]
-    ]
+    ] if can(var.elasticache_parameters) && var.elasticache_parameters != {} && try(elasticache_config.enable_alarms, false)
   ])...)
 
 
