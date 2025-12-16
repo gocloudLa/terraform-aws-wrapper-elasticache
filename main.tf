@@ -3,7 +3,7 @@ module "elasticache" {
   source   = "terraform-aws-modules/elasticache/aws"
   version  = "1.10.3"
 
-  # cluster_id               = "${local.common_name}-${each.key}"
+  cluster_id               = lookup(each.value, "cluster_id", "${local.common_name}-${each.key}")
   # create                   = true
   # create_cluster           = true
   # create_replication_group = true
