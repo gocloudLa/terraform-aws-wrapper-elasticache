@@ -44,7 +44,7 @@ module "elasticache" {
   # }
 
   # Subnet Group
-  subnet_group_name        = "${local.common_name}-${each.key}"
+  subnet_group_name        = lookup(each.value, "subnet_group_name", "${local.common_name}-${each.key}")
   subnet_group_description = "Elasticache subnet group for ${local.common_name}-${each.key}"
   subnet_ids               = lookup(each.value, "subnets", null)
 
