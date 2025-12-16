@@ -4,9 +4,9 @@ module "elasticache" {
   version  = "1.10.3"
 
   cluster_id               = lookup(each.value, "cluster_id", "${local.common_name}-${each.key}")
-  # create                   = true
-  # create_cluster           = true
-  # create_replication_group = true
+  create                   = lookup(each.value, "create", true)
+  create_cluster           = lookup(each.value, "create_cluster", true)
+  create_replication_group = lookup(each.value, "create_replication_group", true)
 
   replication_group_id = "${local.common_name}-${each.key}"
   description          = "Elasticache cluster for ${local.common_name}-${each.key}"
