@@ -49,7 +49,7 @@ module "elasticache" {
   subnet_ids               = lookup(each.value, "subnets", null)
 
   # Parameter Group
-  create_parameter_group      = true
+  create_parameter_group      = lookup(each.value, "create_parameter_group", true)
   parameter_group_name        = "${local.common_name}-${each.key}"
   parameter_group_family      = lookup(each.value, "parameter_group_family", "redis7")
   parameter_group_description = "Elasticache parameter group for ${local.common_name}-${each.key}"
