@@ -8,7 +8,7 @@ module "elasticache" {
   create_cluster           = lookup(each.value, "create_cluster", true)
   create_replication_group = lookup(each.value, "create_replication_group", true)
 
-  replication_group_id = "${local.common_name}-${each.key}"
+  replication_group_id = lookup(each.value, "replication_group_id", "${local.common_name}-${each.key}")
   description          = "Elasticache cluster for ${local.common_name}-${each.key}"
 
   # Clustered mode
