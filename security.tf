@@ -4,7 +4,7 @@ module "security_group_elasticache" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.3.1"
 
-  name            = "${local.common_name}-elasticache-${each.key}"
+  name            = lookup(each.value, "security_group_name", "${local.common_name}-elasticache-${each.key}")
   vpc_id          = data.aws_vpc.this[each.key].id
   use_name_prefix = false
   ingress_with_cidr_blocks = lookup(each.value, "ingress_with_cidr_blocks", [
