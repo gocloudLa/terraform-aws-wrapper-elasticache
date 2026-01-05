@@ -31,7 +31,8 @@ module "elasticache" {
   auto_minor_version_upgrade = lookup(each.value, "auto_minor_version_upgrade", true)
 
   # # Security Group
-  security_group_ids    = try(each.value.security_group_create, true) ? [module.security_group_elasticache[each.key].security_group_id] : each.value.security_group_ids
+  security_group_ids    = concat(try([module.security_group_elasticache[each.key].security_group_id], []), try(each.value.security_group_ids, []))
+
   create_security_group = false
   # vpc_id = module.vpc.vpc_id
   # security_group_rules = {
