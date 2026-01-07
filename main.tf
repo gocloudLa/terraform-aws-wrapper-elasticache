@@ -3,12 +3,12 @@ module "elasticache" {
   source   = "terraform-aws-modules/elasticache/aws"
   version  = "1.10.3"
 
-  # cluster_id               = "${local.common_name}-${each.key}"
-  # create                   = true
-  # create_cluster           = true
-  # create_replication_group = true
+  cluster_id               = lookup(each.value, "cluster_id", "")
+  create                   = lookup(each.value, "create", true)
+  create_cluster           = lookup(each.value, "create_cluster", false)
+  create_replication_group = lookup(each.value, "create_replication_group", true)
 
-  replication_group_id = "${local.common_name}-${each.key}"
+  replication_group_id = lookup(each.value, "replication_group_id", "${local.common_name}-${each.key}")
   description          = "Elasticache cluster for ${local.common_name}-${each.key}"
 
   # Clustered mode
@@ -31,7 +31,8 @@ module "elasticache" {
   auto_minor_version_upgrade = lookup(each.value, "auto_minor_version_upgrade", true)
 
   # # Security Group
-  security_group_ids    = [module.security_group_elasticache[each.key].security_group_id]
+  security_group_ids = concat(try(each.value.security_group_create, true) ? [module.security_group_elasticache[each.key].security_group_id] : [], try(each.value.security_groups_ids, []))
+
   create_security_group = false
   # vpc_id = module.vpc.vpc_id
   # security_group_rules = {
@@ -44,12 +45,13 @@ module "elasticache" {
   # }
 
   # Subnet Group
-  subnet_group_name        = "${local.common_name}-${each.key}"
-  subnet_group_description = "Elasticache subnet group for ${local.common_name}-${each.key}"
+  create_subnet_group      = lookup(each.value, "create_subnet_group", "true")
+  subnet_group_name        = lookup(each.value, "subnet_group_name", "${local.common_name}-${each.key}")
+  subnet_group_description = lookup(each.value, "subnet_group_description", "Elasticache subnet group for ${local.common_name}-${each.key}")
   subnet_ids               = lookup(each.value, "subnets", null)
 
   # Parameter Group
-  create_parameter_group      = true
+  create_parameter_group      = lookup(each.value, "create_parameter_group", true)
   parameter_group_name        = "${local.common_name}-${each.key}"
   parameter_group_family      = lookup(each.value, "parameter_group_family", "redis7")
   parameter_group_description = "Elasticache parameter group for ${local.common_name}-${each.key}"
