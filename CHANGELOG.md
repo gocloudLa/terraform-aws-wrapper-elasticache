@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.3.0...v1.4.0) (2026-01-07)
+
+
+### Features
+
+* **module:** add custom values & rules for security group ([#14](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/14)) ([bbf33b4](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/bbf33b4a1ceec4b16fc234fa5444b73c89c40676))
+
 ## [1.3.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.2.1...v1.3.0) (2025-11-06)
 
 
