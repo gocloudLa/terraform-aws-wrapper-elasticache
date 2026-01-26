@@ -216,6 +216,7 @@ input_table: |
   | node_type | ElastiCache node type. | `string` | `"cache.t4g.micro"` | no |
   | parameter_group_family | Parameter group family for ElastiCache. | `string` | `"redis7"` | no |
   | parameter_group_name | Parameter group name for ElastiCache. | `string` | `"${local.common_name}-${each.key}"` | no |
+  | parameter_group_description | Parameter group description for ElastiCache. | `string` | `"Elasticache parameter group for ${local.common_name}-${each.key}"` | no |
   | port | Port on which the ElastiCache service runs. | `string` | `"6379"` | no |
   | replication_group_id | Replication group identifier. When `create_replication_group` is set to `true`, this is the ID assigned to the replication group created. When `create_replication_group` is set to `false`, this is the ID of an externally created replication group. | `string` | `"${local.common_name}-${each.key}"` | no |
   | security_group_ids | List of security group IDs associated with ElastiCache. | `list` | `[module.security_group_elasticache[each.key].security_group_id]` | no |
