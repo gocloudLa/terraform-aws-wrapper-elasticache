@@ -52,7 +52,7 @@ module "elasticache" {
 
   # Parameter Group
   create_parameter_group      = lookup(each.value, "create_parameter_group", true)
-  parameter_group_name        = lookup(each.vale, "parameter_group_name", "${local.common_name}-${each.key}")
+  parameter_group_name        = lookup(each.value, "parameter_group_name", "${local.common_name}-${each.key}")
   parameter_group_family      = lookup(each.value, "parameter_group_family", "redis7")
   parameter_group_description = lookup(each.value, "parameter_group_description", "Elasticache parameter group for ${local.common_name}-${each.key}")
   parameters                  = lookup(each.value, "parameters", [])
