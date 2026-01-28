@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.4.0...v1.5.0) (2026-01-28)
+
+
+### Features
+
+* **module:** add parameter_group variables ([#16](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/16)) ([b8b4539](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/b8b4539c687981a0a586a8b8976b3db7eb657ec7))
+
 ## [1.4.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.3.0...v1.4.0) (2026-01-07)
 
 
