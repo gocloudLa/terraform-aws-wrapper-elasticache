@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.5.0...v1.6.0) (2026-01-29)
+
+
+### Features
+
+* **security:** add custom tags in security group ([#18](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/18)) ([b6d1a89](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/b6d1a899b221e838339bd2781c5f29b9b232a5ed))
+
 ## [1.5.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.4.0...v1.5.0) (2026-01-28)
 
 
