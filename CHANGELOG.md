@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.6.0...v1.6.1) (2026-02-27)
+
+
+### Bug Fixes
+
+* **deps:** bump terraform-aws-modules/elasticache/aws from 1.10.3 to 1.11.0 in the all-terraform-dependencies group across 1 directory ([#20](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/20)) ([128c092](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/128c092bc7f6b806bab644d1bb01b72ffd1b012d))
+
 ## [1.6.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.5.0...v1.6.0) (2026-01-29)
 
 
