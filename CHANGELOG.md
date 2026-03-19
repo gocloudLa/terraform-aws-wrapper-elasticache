@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.6.1...v1.6.2) (2026-03-19)
+
+
+### Bug Fixes
+
+* **alarms:** add custom alarm description in alarms ([#22](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/22)) ([745d9aa](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/745d9aa16c66098bb11140395bbf21dcb0334a97))
+
 ## [1.6.1](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.6.0...v1.6.1) (2026-02-27)
 
 
