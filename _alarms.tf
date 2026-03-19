@@ -165,7 +165,7 @@ locals {
               alarm,
               {
                 alarm_name        = "${split("/", alarm.namespace)[1]}-${alarm.alarm_name}-${tolist(module.elasticache[elasticache_name].replication_group_member_clusters)[replica_idx]}"
-                alarm_description = "Elasticache[${tolist(module.elasticache[elasticache_name].replication_group_member_clusters)[replica_idx]}] ${alarm.description}"
+                alarm_description = try(alarm.alarm_description, "Elasticache[${tolist(module.elasticache[elasticache_name].replication_group_member_clusters)[replica_idx]}]")
                 dimensions = {
                   CacheClusterId = tolist(module.elasticache[elasticache_name].replication_group_member_clusters)[replica_idx]
                   CacheNodeId    = "0001" # This value is the default value for the CacheNodeId dimension.
