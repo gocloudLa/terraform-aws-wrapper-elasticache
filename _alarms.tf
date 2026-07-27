@@ -126,7 +126,7 @@ locals {
         value,
         {
           alarm_name          = alarm
-          alarm_description   = try(value.description, "")
+          alarm_description   = try(value.description, "Elasticache[${elasticache_name}]")
           actions_enabled     = try(value.actions_enabled, true)
           threshold           = value.threshold
           unit                = value.unit
