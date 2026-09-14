@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.6.3...v1.7.0) (2026-09-14)
+
+
+### Features
+
+* **module:** add engine variable ([#28](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/issues/28)) ([a8363ed](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/commit/a8363ed6a92c5325b5067c8cc0c99c62ebb012c5))
+
 ## [1.6.3](https://github.com/gocloudLa/terraform-aws-wrapper-elasticache/compare/v1.6.2...v1.6.3) (2026-07-31)
 
 
