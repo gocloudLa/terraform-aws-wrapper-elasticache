@@ -36,7 +36,7 @@ module "wrapper_elasticache" {
       # engine_version         = "7.1" # "8.0"
       # parameter_group_family = "redis7" # "valkey8"
       # node_type              = "cache.t4g.micro"
-      
+
       dns_records = {
         "" = {
           zone_name    = local.zone_private
