@@ -23,6 +23,7 @@ module "elasticache" {
   transit_encryption_enabled = lookup(each.value, "transit_encryption_enabled", true)
   transit_encryption_mode    = lookup(each.value, "transit_encryption_mode", "required") # "A setting that enables clients to migrate to in-transit encryption with no downtime. Valid values are preferred and required"
 
+  engine         = lookup(each.value, "engine", "redis")
   engine_version = lookup(each.value, "engine_version", "7.1")
   node_type      = lookup(each.value, "node_type", "cache.t4g.micro")
 

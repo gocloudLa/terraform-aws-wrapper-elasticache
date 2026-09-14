@@ -32,8 +32,9 @@ module "wrapper_elasticache" {
     "ExSimple" = {
       subnets = data.aws_subnets.database.ids
 
-      # engine_version         = "7.1"
-      # parameter_group_family = "redis7"
+      # engine                 = "redis" # OPTIONS: redis, or valkey. DEFAULT: redis
+      # engine_version         = "7.1" # "8.0"
+      # parameter_group_family = "redis7" # "valkey8"
       # node_type              = "cache.t4g.micro"
 
       dns_records = {
